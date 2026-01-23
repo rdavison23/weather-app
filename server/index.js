@@ -9,6 +9,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/weather', (req, res) => {
+  //From Andrew resolved CORS problem
+  res.set('Access-Control-Allow-Origin', '*');
   const city = req.query.cityName;
   console.log(city);
   const apiKey = process.env.WEATHER_APP;
