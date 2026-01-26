@@ -1,14 +1,14 @@
 import 'dotenv/config';
 import express from 'express';
 
-const app = express();
+const server = express();
 const port = process.env.PORT;
 
-app.get('/', (req, res) => {
+server.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/weather', (req, res) => {
+server.get('/weather', (req, res) => {
   //From Andrew resolved CORS problem
   res.set('Access-Control-Allow-Origin', '*'); //It makes abuse easier then * lets anyone build a client that uses your API without permission
   const city = req.query.cityName;
@@ -24,12 +24,13 @@ app.get('/weather', (req, res) => {
   fetch(url)
     .then((res) => res.json())
     .then((data) => {
+      console.log(data);
       res.send({ data });
     })
     .catch((err) => {
       console.log(err);
     });
 });
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
