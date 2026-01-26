@@ -7,25 +7,26 @@ function App() {
   const [city, setCity] = useState('');
   const [result, setResult] = useState(null);
 
-  //A function to do the get request and set the state from the hard code data
-  // const loadCity = () => {
-  //   // fetch('http://localhost:3000/weather')
-  //   //   .then((response) => response.json())
-  //   //   .then((result) => {
-  //   //     //console.log(result)
-  //   //     setCity(result.weather[0].name);
-  //   //     setResult(result);
-  //   //   });
-  // // };
+  //function to do the get request and set the state from the hard code data
+  const loadCity = () => {
+    fetch(`http://localhost:3001/weather?cityName=${city}`)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log('after fech reult is :', result);
+        // setCity(result.weather[0].name);
+        setResult(result.data);
+      });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // loadCity();
+    console.log(e);
+    loadCity();
   };
 
   return (
     <div className="App">
-      <WeatherForm city={city} handleSubmit={handleSubmit} />
+      <WeatherForm setCity={setCity} handleSubmit={handleSubmit} />
       {!result ? (
         <p>Please click the botton to see Data</p>
       ) : (
