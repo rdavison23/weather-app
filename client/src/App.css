@@ -15,7 +15,7 @@ body {
   max-width: 350px;
   margin: 20px auto;
   padding: 20px;
-  background: #5b8b8e34;
+  background: linear-gradient(135deg, #5cceaf 10%, #225a53 100%);
   border-radius: 14px;
   box-shadow: 0 4px 14px rgb(75, 160, 160);
   font-family: 'Segoe UI', sans-serif;
