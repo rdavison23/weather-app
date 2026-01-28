@@ -21,7 +21,13 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(e);
-    loadCity();
+
+    // if event has info ,then load city, else ("no city given")
+    if (city.length > 0) {
+      loadCity();
+    } else {
+      console.log('no city given');
+    }
   };
 
   return (
