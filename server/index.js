@@ -11,8 +11,14 @@ server.get('/', (req, res) => {
 server.get('/weather', (req, res) => {
   //From Andrew resolved CORS problem
   res.set('Access-Control-Allow-Origin', '*'); //It makes abuse easier then * lets anyone build a client that uses your API without permission
+
   const city = req.query.cityName;
+  if (city.length === 0) {
+    res.sendStatus(204);
+    res.render('error', { error: 'no city given' });
+  }
   console.log(city);
+
   const apiKey = process.env.WEATHER_APP;
   const params = new URLSearchParams({
     q: city,
