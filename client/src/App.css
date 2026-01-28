@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #296c74;
+  background-image: url('./components/sky123.jpg');
   display: flex;
   justify-content: center;
   padding-top: 40px;
@@ -15,12 +15,21 @@ body {
   max-width: 350px;
   margin: 20px auto;
   padding: 20px;
-  background: linear-gradient(135deg, #5cceaf 10%, #225a53 100%);
+  background: linear-gradient(135deg, #5cb0ce 10%, #224c5a 100%);
   border-radius: 14px;
-  box-shadow: 0 4px 14px rgb(75, 160, 160);
+  box-shadow: 0 4px 14px rgb(75, 154, 160);
   font-family: 'Segoe UI', sans-serif;
   color: #f1eded;
 }
+
+.weather-card img {
+  width: 120px;
+  filter: drop-shadow(0 4px 8px rgba(152, 118, 118, 0.2));
+  border-radius: 12px;
+  background: linear-gradient(135deg, #98d0de, #bbdefb);
+  padding: 10px;
+}
+
 form {
   margin-left: 150px;
 }
