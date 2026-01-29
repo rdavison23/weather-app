@@ -1,5 +1,21 @@
 const WeatherCard = (props) => {
   console.log('in weather card:', props);
+  const { data, loading } = props;
+  if (loading) {
+    return (
+      <div className="weather-card">
+        <p>loading weather data...</p>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="weather-card">
+        <p>loadding weather data...</p>
+      </div>
+    );
+  }
   return (
     <div className="weather-card">
       <div className="result">
