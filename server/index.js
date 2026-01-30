@@ -1,11 +1,14 @@
 import 'dotenv/config';
 import express from 'express';
+import path from 'path';
 
 const server = express();
+const REACT_BUILD_DIR = path.join(__dirname, '..', 'client', 'build');
+app.use(express.static(REACT_BUILD_DIR));
 const port = process.env.PORT;
 
 server.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.sendFile(path.join(REACT_BUILD_DIR, 'index.html'));
 });
 
 server.get('/weather', (req, res) => {
