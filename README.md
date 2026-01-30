@@ -1,11 +1,14 @@
 # Weather App — React + Express + OpenWeatherMap
 
 - A minimal full‑stack weather application built with React (Vite) on the frontend and ExpressJS on the backend.
-- The app fetches real‑time weather data from the OpenWeatherMap API, displays key weather details, and dynamically updates the background based on day/night conditions.
+- The app fetches real‑time weather data from the [OpenWeatherMap](https://openweathermap.org/api)
+  API, displays key weather details, and dynamically updates the background based on day/night conditions.
 
 # Demo / Screenshot
 
+DayTime
 ![dayTime screenshot](DayTime.png)
+NightTime
 ![nightTime screenshot](NightTime.png)
 
 # Project Objective
