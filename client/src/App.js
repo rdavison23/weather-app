@@ -22,14 +22,11 @@ function App() {
   const loadCity = () => {
     fetch(`http://localhost:3001/weather?cityName=${city}`)
       .then((response) => {
-        console.log('we got a response', response);
         if (response.status === 204) {
-          console.log('no city');
         }
         return response.json();
       })
       .then((result) => {
-        console.log('after fech reult is :', result);
         // setCity(result.weather[0].name);
         setResult(result.data);
       });
