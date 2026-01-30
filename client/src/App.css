@@ -34,7 +34,9 @@ body {
   background: linear-gradient(135deg, #98d0de, #bbdefb);
   padding: 10px;
 }
-
+.click {
+  color: #ffffffe9;
+}
 form {
   margin: 20px auto;
   width: 100%;
@@ -64,15 +66,17 @@ form input {
   border: 1px solid #5091a2;
   font-size: 1rem;
   width: 60%;
+  display: block;
+  margin: 0 auto;
 }
 
 form button {
   padding: 10px 16px;
   border-radius: 8px;
   border: none;
-  background: #ebe4e8;
   font-size: 1rem;
   cursor: pointer;
+  align-items: center;
 }
 
 .data {
