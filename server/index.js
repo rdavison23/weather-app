@@ -1,10 +1,15 @@
 import 'dotenv/config';
 import express from 'express';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const server = express();
 const REACT_BUILD_DIR = path.join(__dirname, '..', 'client', 'build');
-app.use(express.static(REACT_BUILD_DIR));
+server.use(express.static(REACT_BUILD_DIR));
 const port = process.env.PORT;
 
 server.get('/', (req, res) => {
