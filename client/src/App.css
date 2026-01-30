@@ -1,3 +1,11 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,30 +13,43 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #296c74;
-  display: flex;
-  justify-content: center;
-  padding-top: 40px;
+  height: 100%;
 }
 
 .weather-card {
   max-width: 350px;
   margin: 20px auto;
   padding: 20px;
-  background: linear-gradient(135deg, #5cceaf 10%, #225a53 100%);
+  background: linear-gradient(135deg, #5cb0cea9 10%, #17333eaa 100%);
   border-radius: 14px;
-  box-shadow: 0 4px 14px rgb(75, 160, 160);
+  box-shadow: 0 4px 14px rgb(59, 146, 152);
   font-family: 'Segoe UI', sans-serif;
   color: #f1eded;
 }
+
+.weather-card img {
+  width: 120px;
+  filter: drop-shadow(0 4px 8px rgba(152, 118, 118, 0.2));
+  border-radius: 12px;
+  background: linear-gradient(135deg, #98d0de, #bbdefb);
+  padding: 10px;
+}
+.click {
+  color: #ffffffe9;
+}
 form {
-  margin-left: 150px;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 400px;
 }
 
 .App {
   width: 100%;
-  max-width: 500px;
-  padding: 0 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
 }
 
 .App-header {
@@ -45,19 +66,26 @@ form input {
   border: 1px solid #5091a2;
   font-size: 1rem;
   width: 60%;
+  display: block;
+  margin: 0 auto;
 }
 
 form button {
   padding: 10px 16px;
   border-radius: 8px;
   border: none;
-  background: #ebe4e8;
-  color: rgb(130, 182, 186);
   font-size: 1rem;
   cursor: pointer;
+  align-items: center;
 }
 
 .data {
   color: #e3e5ec;
   font-weight: 600;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }

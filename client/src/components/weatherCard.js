@@ -1,5 +1,6 @@
 const WeatherCard = (props) => {
-  console.log('in weather card:', props);
+  const roundedTemp = Math.round(props.data.main.temp);
+  const feelsLike = Math.round(props.data.main.feels_like);
   return (
     <div className="weather-card">
       <div className="result">
@@ -20,13 +21,13 @@ const WeatherCard = (props) => {
         <p>
           Temperature:{' '}
           <span className="data">
-            {props.data.main.temp} <sup>o</sup>F
+            {roundedTemp} <sup>o</sup>F
           </span>
         </p>
         <p>
           Feels Like:{' '}
           <span className="data">
-            {props.data.main.feels_like} <sup>o</sup>F
+            {feelsLike} <sup>o</sup>F
           </span>
         </p>
       </div>
