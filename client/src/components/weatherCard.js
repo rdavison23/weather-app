@@ -1,5 +1,4 @@
 const WeatherCard = (props) => {
-  console.log('in weather card:', props);
   const { data, loading } = props;
   if (loading) {
     return (
