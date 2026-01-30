@@ -10,7 +10,7 @@ function App() {
   const [result, setResult] = useState(null);
 
   const isDaytime = () => {
-    if (!result) return true; //defult before data loads
+    if (!result) return true; //default before data loads
     const localUnix = result.dt + result.timezone;
     const localDate = new Date(localUnix * 1000);
     const hour = localDate.getUTCHours();
@@ -62,7 +62,7 @@ function App() {
       }}>
       <WeatherForm setCity={setCity} handleSubmit={handleSubmit} />
       {!result ? (
-        <p>Please click the button to see Data</p>
+        <p className="click">Please click the button to see Data</p>
       ) : (
         <WeatherCard data={result} />
       )}
