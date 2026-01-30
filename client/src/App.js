@@ -20,7 +20,7 @@ function App() {
 
   //function to do the get request and set the state from the hard code data
   const loadCity = () => {
-    fetch(`http://localhost:3001/weather?cityName=${city}`)
+    fetch(`/weather?cityName=${city}`)
       .then((response) => {
         if (response.status === 204) {
         }
