@@ -47,5 +47,5 @@ server.get('/weather', (req, res) => {
 });
  server.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
-export default server;
+// export default server;
  });
