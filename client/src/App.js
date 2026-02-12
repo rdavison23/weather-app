@@ -20,17 +20,39 @@ function App() {
 
   //function to do the get request and set the state from the hard code data
   const loadCity = () => {
-    fetch(`/weather?cityName=${city}`)
-      .then((response) => {
-        if (response.status === 204) {
-        }
-        return response.json();
-      })
-      .then((result) => {
-        // setCity(result.weather[0].name);
-        setResult(result.data);
-      });
-  };
+  fetch(`/weather?cityName=${encodeURIComponent(city)}`)
+    .then((response) => {
+      if (response.status === 204) {
+        // no content
+        setResult(null);
+        return null;
+      }
+
+      if (!response.ok) {
+        return response.json().then((err) => {
+          throw new Error(err?.message || "Server error");
+        });
+      }
+
+      return response.json();
+    })
+    .then((payload) => {
+      if (!payload) return;
+
+      // payload should be { data: <openweather object> }
+      if (!payload.data || !payload.data.main) {
+        throw new Error(payload?.data?.message || "Weather data missing (bad city?)");
+      }
+
+      setResult(payload.data);
+    })
+    .catch((err) => {
+      console.log("loadCity error:", err);
+      setResult(null);
+      // optional: show this in UI via an error state
+    });
+};
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
