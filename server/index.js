@@ -28,6 +28,7 @@ server.get('/weather', (req, res) => {
   console.log(city);
 
   const apiKey = process.env.WEATHER_APP;
+  console.log(apiKey);
   const params = new URLSearchParams({
     q: city,
     appid: apiKey,
