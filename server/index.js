@@ -21,13 +21,14 @@ server.get('/weather', (req, res) => {
   res.set('Access-Control-Allow-Origin', '*'); //It makes abuse easier then * lets anyone build a client that uses your API without permission
 
   const city = req.query.cityName;
-  if (city.length === 0) {
-    res.sendStatus(204);
-    res.render('error', { error: 'no city given' });
+ if (!city || city.trim().length === 0) {
+    return res.status(400).json({ error: "City name is required." });
   }
+
   console.log(city);
 
   const apiKey = process.env.WEATHER_APP;
+  console.log(apiKey);
   const params = new URLSearchParams({
     q: city,
     appid: apiKey,
@@ -45,7 +46,7 @@ server.get('/weather', (req, res) => {
       console.log(err);
     });
 });
-// server.listen(port, () => {
-//   console.log(`Example app listening on port ${port}`);
-export default server;
-// });
+ server.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+// export default server;
+ });
