@@ -8,62 +8,60 @@ import nightImage from './components/night.jpg';
 function App() {
   const [city, setCity] = useState('');
   const [result, setResult] = useState(null);
+  const [error, setError] = useState('');
 
   const isDaytime = () => {
-    if (!result) return true; //default before data loads
+    if (!result) return true;
     const localUnix = result.dt + result.timezone;
     const localDate = new Date(localUnix * 1000);
     const hour = localDate.getUTCHours();
-
     return hour >= 6 && hour < 18;
   };
 
-  //function to do the get request and set the state from the hard code data
   const loadCity = () => {
-  fetch(`/weather?cityName=${encodeURIComponent(city)}`)
-    .then((response) => {
-      if (response.status === 204) {
-        // no content
+    setError('');
+
+    fetch(`/weather?cityName=${encodeURIComponent(city)}`)
+      .then((response) => {
+        if (response.status === 204) {
+          setResult(null);
+          setError('No data returned.');
+          return null;
+        }
+
+        if (!response.ok) {
+          return response.json().then((err) => {
+            throw new Error(err?.error || err?.message || 'Server error');
+          });
+        }
+
+        return response.json();
+      })
+      .then((payload) => {
+        if (!payload) return;
+
+        if (!payload.data || !payload.data.main) {
+          throw new Error('Weather data missing (bad city?)');
+        }
+
+        setResult(payload.data);
+      })
+      .catch((err) => {
         setResult(null);
-        return null;
-      }
-
-      if (!response.ok) {
-        return response.json().then((err) => {
-          throw new Error(err?.message || "Server error");
-        });
-      }
-
-      return response.json();
-    })
-    .then((payload) => {
-      if (!payload) return;
-
-      // payload should be { data: <openweather object> }
-      if (!payload.data || !payload.data.main) {
-        throw new Error(payload?.data?.message || "Weather data missing (bad city?)");
-      }
-
-      setResult(payload.data);
-    })
-    .catch((err) => {
-      console.log("loadCity error:", err);
-      setResult(null);
-      // optional: show this in UI via an error state
-    });
-};
-
+        setError(err?.message || 'Something went wrong.');
+      });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
 
-    // if event has info ,then load city, else ("no city given")
-    if (city.length > 0) {
-      loadCity();
-    } else {
-      console.log('no city given');
+    if (!city || city.trim().length === 0) {
+      setResult(null);
+      setError('City name is required.');
+      return;
     }
+
+    loadCity();
   };
 
   return (
@@ -78,8 +76,12 @@ function App() {
         backgroundRepeat: 'no-repeat',
         minHeight: '100vh',
         width: '100%',
-      }}>
+      }}
+    >
       <WeatherForm setCity={setCity} handleSubmit={handleSubmit} />
+
+      {error && <p className="click">{error}</p>}
+
       {!result ? (
         <p className="click">Please click the button to see Data</p>
       ) : (
