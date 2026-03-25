@@ -45,4 +45,35 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+//Update favorite city
+router.put('/:id/favorite-city', async (req, res, next) => {
+  try {
+    const { favoritecity } = pool.query;
+
+    if (!favoritecity || favoritecity.trim().length < 2) {
+      return res
+        .status(400)
+        .json({
+          error: 'Favorite city is required and must be at least 2 characters.',
+        });
+    }
+
+    const result = await pool.query(
+      `UPDATE users
+            SET favorite_city = $1
+            WHERE id = $2
+            RETURNING *`,
+      [favoriteCity, req.params.id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    next(err);
+  }
+});
+
 export default router;
