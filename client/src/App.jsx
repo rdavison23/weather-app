@@ -8,6 +8,7 @@ import nightImage from './components/night.jpg';
 function App() {
   const [city, setCity] = useState('');
   const [result, setResult] = useState(null);
+  const [user, setUser] = useState(null)
 
   const isDaytime = () => {
     if (!result) return true; //default before data loads
