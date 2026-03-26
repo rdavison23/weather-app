@@ -89,3 +89,110 @@ form button {
   flex-direction: column;
   min-height: 100vh;
 }
+
+.user-bar {
+  width: 100%;
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
+  padding: 14px 18px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  color: #ffffff;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.favorite-btn {
+  background: #3d88b388;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.favorite-btn:hover {
+  background: #4387a0;
+}
+
+.favorite-btn:disabled {
+  background: #4ab5c3;
+  cursor: not-allowed;
+}
+
+.error {
+  background: rgba(250, 250, 250, 0.228);
+  color: #f6f0f0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-top: 10px;
+  font-weight: 600;
+  text-align: center;
+  max-width: 400px;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Base nav style */
+.top-nav {
+  width: 100%;
+  padding: 14px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* 🌞 Daytime nav */
+.top-nav.day {
+  background: rgba(96, 170, 215, 0.561); /* sky blue tint */
+}
+
+/* 🌙 Nighttime nav */
+.top-nav.night {
+  background: rgba(10, 10, 30, 0.604); /* deep night blue */
+}
+
+/* Nav links */
+.top-nav a {
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1.15rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.top-nav a:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Logout button */
+.nav-logout-btn {
+  background: #3d88b388;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.nav-logout-btn:hover {
+  background: #ff4b4b;
+}
