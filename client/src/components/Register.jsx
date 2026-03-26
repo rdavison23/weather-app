@@ -5,11 +5,13 @@ export default function Register({ onRegister }) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true); // start loading
 
     try {
       const res = await fetch('/api/users', {
@@ -22,6 +24,7 @@ export default function Register({ onRegister }) {
 
       if (!res.ok) {
         setError(data.error || 'Registration failed.');
+        setLoading(false); // stop loading on error
         return;
       }
 
@@ -31,6 +34,8 @@ export default function Register({ onRegister }) {
     } catch (err) {
       setError('Something went wrong.');
     }
+
+    setLoading(false); // stop loading after success
   };
 
   return (
@@ -52,7 +57,9 @@ export default function Register({ onRegister }) {
         onChange={(e) => setEmail(e.target.value)}
       />
 
-      <button type="submit">Register</button>
+      <button type="submit" disabled={loading}>
+        {loading ? 'Creating account...' : 'Register'} {/* loading text */}
+      </button>
 
       {error && <p className="error">{error}</p>}
     </form>
