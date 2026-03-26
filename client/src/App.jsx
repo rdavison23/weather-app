@@ -6,9 +6,23 @@ import RegisterView from './views/RegisterView';
 function App() {
   return (
     <BrowserRouter>
-      <nav>
+      <nav
+        className={`top-nav ${
+          localStorage.getItem('isNight') === 'true' ? 'night' : 'day'
+        }`}>
         <Link to="/">Home</Link>
         <Link to="/register">Register</Link>
+
+        {localStorage.getItem('user') && (
+          <button
+            className="nav-logout-btn"
+            onClick={() => {
+              localStorage.removeItem('user');
+              window.location.href = '/';
+            }}>
+            Logout
+          </button>
+        )}
       </nav>
 
       <Routes>
