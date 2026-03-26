@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import WeatherForm from '../components/weatherForm';
 import WeatherCard from '../components/weatherCard';
 import Register from '../components/Register';
@@ -12,6 +12,13 @@ function WeatherView() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [savingFavorite, setSavingFavorite] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('user');
+    if (stored) {
+      setUser(JSON.parse(stored));
+    }
+  }, []);
 
   const isDaytime = () => {
     if (!result) return true;
