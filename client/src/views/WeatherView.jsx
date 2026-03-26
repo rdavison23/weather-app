@@ -11,6 +11,7 @@ function WeatherView() {
   const [user, setUser] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [savingFavorite, setSavingFavorite] = useState(false);
 
   const isDaytime = () => {
     if (!result) return true;
@@ -23,6 +24,7 @@ function WeatherView() {
   const loadCity = async () => {
     setError('');
     setLoading(true);
+    setResult(null);
 
     try {
       const response = await fetch(`/weather?cityName=${city}`);
@@ -34,7 +36,6 @@ function WeatherView() {
         return;
       }
 
-      const result = await response.json();
       setResult(result.data);
     } catch (err) {
       setError('Network error. Please try again.');
@@ -54,6 +55,7 @@ function WeatherView() {
   const saveFavoriteCity = async (cityName) => {
     if (!user) {
       setError('You must register before saving a favorite city.');
+      setSavingFavorite(true);
       return;
     }
 
@@ -68,6 +70,7 @@ function WeatherView() {
 
       if (!res.ok) {
         setError(data.error || 'Could not save favorite city.');
+        setSavingFavorite(false);
         return;
       }
 
@@ -76,6 +79,7 @@ function WeatherView() {
     } catch (err) {
       setError('Something went wrong saving your favorite city.');
     }
+    setSavingFavorite(false);
   };
 
   return (
@@ -91,8 +95,11 @@ function WeatherView() {
         minHeight: '100vh',
         width: '100%',
       }}>
-      <WeatherForm setCity={setCity} handleSubmit={handleSubmit} />
-
+      <WeatherForm
+        setCity={setCity}
+        handleSubmit={handleSubmit}
+        loading={loading}
+      />
       {error && <p className="error">{error}</p>}
 
       {!result ? (
@@ -104,9 +111,15 @@ function WeatherView() {
           {user && (
             <button
               className="favorite-btn"
-              onClick={() => saveFavoriteCity(city)}>
-              Save as Favorite
+              onClick={() => saveFavoriteCity(city)}
+              disabled={savingFavorite}>
+              {savingFavorite ? 'Saving...' : 'Save as Favorite'}
             </button>
+          )}
+          {user?.favorite_city && (
+            <p className="favorite-info">
+              Your favorite city: <strong>{user.favorite_city}</strong>
+            </p>
           )}
         </>
       )}
