@@ -1,6 +1,6 @@
 import express from 'express';
 import pool from '../db.js';
-import router from './weather.js';
+import weatherRouter from './weather.js';
 
 const router = express.Router();
 
@@ -32,13 +32,16 @@ router.post('/', async (req, res, next) => {
 
 //Get user by ID
 router.get('/:id', async (req, res, next) => {
+  console.log('req.params.id:', req.params.id);
   try {
-    const result = await pool.query(
-      'SELECT * FROM users WHERE id=1'[req.params.id]
-    );
-    if (result.rows.length == 0) {
+    const result = await pool.query('SELECT * FROM users WHERE id = $1', [
+      req.params.id,
+    ]);
+
+    if (result.rows.length === 0) {
       return res.status(400).json({ error: 'user not found' });
     }
+
     res.json(result.rows[0]);
   } catch (err) {
     next(err);
@@ -48,21 +51,19 @@ router.get('/:id', async (req, res, next) => {
 //Update favorite city
 router.put('/:id/favorite-city', async (req, res, next) => {
   try {
-    const { favoritecity } = pool.query;
+    const { favoriteCity } = req.body;
 
-    if (!favoritecity || favoritecity.trim().length < 2) {
-      return res
-        .status(400)
-        .json({
-          error: 'Favorite city is required and must be at least 2 characters.',
-        });
+    if (!favoriteCity || favoriteCity.trim().length < 2) {
+      return res.status(400).json({
+        error: 'Favorite city is required and must be at least 2 characters.',
+      });
     }
 
     const result = await pool.query(
       `UPDATE users
-            SET favorite_city = $1
-            WHERE id = $2
-            RETURNING *`,
+         SET favorite_city = $1
+         WHERE id = $2
+         RETURNING *`,
       [favoriteCity, req.params.id]
     );
 

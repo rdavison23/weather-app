@@ -1,9 +1,12 @@
 import 'dotenv/config';
 import express from 'express';
 import weatherRouter from './routes/weather.js';
+import usersRouter from './routes/users.js';
 
 const server = express();
 server.use(express.json());
+
+server.use('/api/users', usersRouter);
 
 // API routes
 server.use('/weather', weatherRouter);
