@@ -28,15 +28,15 @@ function WeatherView() {
 
     try {
       const response = await fetch(`/weather?cityName=${city}`);
+      const data = await response.json();
 
       if (!response.ok) {
-        const data = await response.json();
         setError(data.error || 'Unable to fetch weather.');
         setLoading(false);
         return;
       }
 
-      setResult(result.data);
+      setResult(data.data);
     } catch (err) {
       setError('Network error. Please try again.');
     }
