@@ -11,7 +11,7 @@ const WeatherForm = ({ setCity, handleSubmit, loading }) => {
 
   return (
     <div className="weather">
-      <h1 className="App-header">Weather Forecast App</h1>
+      <h1 className="App-header">Weather Forecast</h1>
 
       <form onSubmit={handleSubmit}>
         <input

@@ -147,17 +147,6 @@ function WeatherView() {
               </>
             )}
           </p>
-
-          <button
-            className="logout-btn"
-            onClick={handleLogout}
-            style={{
-              padding: '6px 12px',
-              marginTop: '8px',
-              cursor: 'pointer',
-            }}>
-            Logout
-          </button>
         </div>
       )}
 
@@ -168,17 +157,17 @@ function WeatherView() {
         loading={loading}
       />
 
-      {/* --- error message --- */}
+      {/* --- Error Message --- */}
       {error && <p className="error">{error}</p>}
 
-      {/* --- weather result --- */}
+      {/* --- Weather Result --- */}
       {!result ? (
         <p className="click">Please click the button to see Data</p>
       ) : (
         <>
           <WeatherCard data={result} />
 
-          {/* --- Save Favorite button (only if logged in) --- */}
+          {/* --- Save Favorite Button (only if logged in) --- */}
           {user && (
             <button
               className="favorite-btn"
@@ -197,5 +186,4 @@ function WeatherView() {
     </div>
   );
 }
-
 export default WeatherView;
