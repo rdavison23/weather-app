@@ -1,17 +1,19 @@
 import { useState } from 'react';
 
-const WeatherForm = (props) => {
+const WeatherForm = ({ setCity, handleSubmit, loading }) => {
   const [value, setValue] = useState('');
 
   function handleInputs(event) {
-    //console.log(event.target.value);
-    setValue(event.target.value);
-    props.setCity(event.target.value);
+    const newValue = event.target.value;
+    setValue(newValue);
+    setCity(newValue);
   }
+
   return (
     <div className="weather">
       <h1 className="App-header">Weather Forecast App</h1>
-      <form onSubmit={props.handleSubmit}>
+
+      <form onSubmit={handleSubmit}>
         <input
           id="city-name"
           type="text"
@@ -19,8 +21,16 @@ const WeatherForm = (props) => {
           name="city"
           value={value}
           onChange={handleInputs}
+          required
+          minLength={2}
+          autoComplete="off"
         />
-        <input type="submit" value="Submit" />
+
+        <input
+          type="submit"
+          value={loading ? 'Loading...' : 'Submit'}
+          disabled={loading}
+        />
       </form>
     </div>
   );
