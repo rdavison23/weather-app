@@ -28,6 +28,8 @@ export default function Register({ onRegister }) {
         return;
       }
 
+      localStorage.setItem('user', JSON.stringify(data));
+
       if (onRegister) onRegister(data);
 
       navigate('/'); // redirect to home
