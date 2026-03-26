@@ -10,6 +10,7 @@ function WeatherView() {
   const [result, setResult] = useState(null);
   const [user, setUser] = useState(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const isDaytime = () => {
     if (!result) return true;
@@ -21,6 +22,7 @@ function WeatherView() {
 
   const loadCity = async () => {
     setError('');
+    setLoading(true);
 
     try {
       const response = await fetch(`/weather?cityName=${city}`);
@@ -28,6 +30,7 @@ function WeatherView() {
       if (!response.ok) {
         const data = await response.json();
         setError(data.error || 'Unable to fetch weather.');
+        setLoading(false);
         return;
       }
 
@@ -36,6 +39,7 @@ function WeatherView() {
     } catch (err) {
       setError('Network error. Please try again.');
     }
+    setLoading(false);
   };
 
   const handleSubmit = (e) => {
