@@ -101,32 +101,64 @@ function WeatherView() {
         backgroundRepeat: 'no-repeat',
         minHeight: '100vh',
         width: '100%',
+        padding: '20px',
       }}>
+      {/* --- USER BAR (Welcome + Favorite City + Logout) --- */}
+      {user && (
+        <div className="user-bar" style={{ marginBottom: '20px' }}>
+          <p style={{ fontSize: '1.2rem' }}>
+            Welcome, <strong>{user.username}</strong>
+            {user.favorite_city && (
+              <>
+                {' '}
+                — Favorite city: <strong>{user.favorite_city}</strong>
+              </>
+            )}
+          </p>
+
+          <button
+            className="logout-btn"
+            onClick={handleLogout}
+            style={{
+              padding: '6px 12px',
+              marginTop: '8px',
+              cursor: 'pointer',
+            }}>
+            Logout
+          </button>
+        </div>
+      )}
+
+      {/* --- Weather Form --- */}
       <WeatherForm
         setCity={setCity}
         handleSubmit={handleSubmit}
         loading={loading}
       />
+
+      {/* --- error message --- */}
       {error && <p className="error">{error}</p>}
 
+      {/* --- weather result --- */}
       {!result ? (
         <p className="click">Please click the button to see Data</p>
       ) : (
         <>
           <WeatherCard data={result} />
 
+          {/* --- Save Favorite button (only if logged in) --- */}
           {user && (
             <button
               className="favorite-btn"
               onClick={() => saveFavoriteCity(city)}
-              disabled={savingFavorite}>
+              disabled={savingFavorite}
+              style={{
+                marginTop: '15px',
+                padding: '8px 14px',
+                cursor: 'pointer',
+              }}>
               {savingFavorite ? 'Saving...' : 'Save as Favorite'}
             </button>
-          )}
-          {user?.favorite_city && (
-            <p className="favorite-info">
-              Your favorite city: <strong>{user.favorite_city}</strong>
-            </p>
           )}
         </>
       )}
