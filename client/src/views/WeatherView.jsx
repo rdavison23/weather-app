@@ -16,9 +16,41 @@ function WeatherView() {
   useEffect(() => {
     const stored = localStorage.getItem('user');
     if (stored) {
-      setUser(JSON.parse(stored));
+      const parsed = JSON.parse(stored);
+      setUser(parsed);
+
+      if (parsed.favorite_city) {
+        setCity(parsed.favorite_city);
+        // auto-load weather
+        (async () => {
+          setLoading(true);
+          try {
+            const response = await fetch(
+              `/weather?cityName=${parsed.favorite_city}`
+            );
+            if (!response.ok) {
+              const data = await response.json();
+              setError(data.error || 'Unable to fetch weather.');
+              setLoading(false);
+              return;
+            }
+            const result = await response.json();
+            setResult(result.data);
+          } catch (err) {
+            setError('Network error. Please try again.');
+          }
+          setLoading(false);
+        })();
+      }
     }
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+    setResult(null);
+    setCity('');
+  };
 
   const isDaytime = () => {
     if (!result) return true;
