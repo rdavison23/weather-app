@@ -1,9 +1,20 @@
 import './App.css';
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import WeatherView from './views/WeatherView';
 import RegisterView from './views/RegisterView';
 
 function App() {
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+  };
+
   return (
     <BrowserRouter>
       <nav
@@ -13,13 +24,8 @@ function App() {
         <Link to="/">Home</Link>
         <Link to="/register">Register</Link>
 
-        {localStorage.getItem('user') && (
-          <button
-            className="nav-logout-btn"
-            onClick={() => {
-              localStorage.removeItem('user');
-              window.location.href = '/';
-            }}>
+        {user && (
+          <button className="nav-logout-btn" onClick={handleLogout}>
             Logout
           </button>
         )}
@@ -27,7 +33,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<WeatherView />} />
-        <Route path="/register" element={<RegisterView />} />
+        <Route path="/register" element={<RegisterView setUser={setUser} />} />
       </Routes>
     </BrowserRouter>
   );
