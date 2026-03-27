@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function Register({ onRegister }) {
+export default function Register({ setUser }) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
@@ -29,8 +29,7 @@ export default function Register({ onRegister }) {
       }
 
       localStorage.setItem('user', JSON.stringify(data));
-
-      if (onRegister) onRegister(data);
+      setUser(data);
 
       navigate('/'); // redirect to home
     } catch (err) {
