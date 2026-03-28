@@ -13,7 +13,7 @@ const WeatherForm = ({ setCity, handleSubmit, loading }) => {
     <div className="weather">
       <h1 className="App-header">Weather Forecast</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form className="weather-search-form" onSubmit={handleSubmit}>
         <input
           id="city-name"
           type="text"
