@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import WeatherForm from '../components/weatherForm';
 import WeatherCard from '../components/weatherCard';
-import Register from '../components/Register';
 import dayImage from '../components/day.jpg';
 import nightImage from '../components/night.jpg';
 
@@ -12,6 +11,38 @@ function WeatherView() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [savingFavorite, setSavingFavorite] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('user');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      setUser(parsed);
+
+      if (parsed.favorite_city) {
+        setCity(parsed.favorite_city);
+        // auto-load weather
+        (async () => {
+          setLoading(true);
+          try {
+            const response = await fetch(
+              `/weather?cityName=${parsed.favorite_city}`
+            );
+            if (!response.ok) {
+              const data = await response.json();
+              setError(data.error || 'Unable to fetch weather.');
+              setLoading(false);
+              return;
+            }
+            const result = await response.json();
+            setResult(result.data);
+          } catch (err) {
+            setError('Network error. Please try again.');
+          }
+          setLoading(false);
+        })();
+      }
+    }
+  }, []);
 
   const isDaytime = () => {
     if (!result) return true;
@@ -94,37 +125,59 @@ function WeatherView() {
         backgroundRepeat: 'no-repeat',
         minHeight: '100vh',
         width: '100%',
+        padding: '20px',
       }}>
-      <WeatherForm
-        setCity={setCity}
-        handleSubmit={handleSubmit}
-        loading={loading}
-      />
+      {/* --- USER BAR (Welcome + Favorite City + Logout) --- */}
+      {user && (
+        <div className="user-bar" style={{ marginBottom: '20px' }}>
+          <p style={{ fontSize: '1.2rem' }}>
+            Welcome, <strong>{user.username}</strong>
+            {user.favorite_city && (
+              <>
+                {' '}
+                — Favorite city: <strong>{user.favorite_city}</strong>
+              </>
+            )}
+          </p>
+        </div>
+      )}
+
+      {/* --- Weather Form --- */}
+      <div className="weather-search">
+        <WeatherForm
+          setCity={setCity}
+          handleSubmit={handleSubmit}
+          loading={loading}
+        />
+      </div>
+
+      {/* --- Error Message --- */}
       {error && <p className="error">{error}</p>}
 
+      {/* --- Weather Result --- */}
       {!result ? (
-        <p className="click">Please click the button to see Data</p>
+        <p className="click"></p>
       ) : (
         <>
           <WeatherCard data={result} />
 
+          {/* --- Save Favorite Button (only if logged in) --- */}
           {user && (
             <button
               className="favorite-btn"
               onClick={() => saveFavoriteCity(city)}
-              disabled={savingFavorite}>
+              disabled={savingFavorite}
+              style={{
+                marginTop: '15px',
+                padding: '8px 14px',
+                cursor: 'pointer',
+              }}>
               {savingFavorite ? 'Saving...' : 'Save as Favorite'}
             </button>
-          )}
-          {user?.favorite_city && (
-            <p className="favorite-info">
-              Your favorite city: <strong>{user.favorite_city}</strong>
-            </p>
           )}
         </>
       )}
     </div>
   );
 }
-
 export default WeatherView;
