@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import WeatherForm from '../components/weatherForm';
 import WeatherCard from '../components/weatherCard';
-import Register from '../components/Register';
 import dayImage from '../components/day.jpg';
 import nightImage from '../components/night.jpg';
 
@@ -44,13 +43,6 @@ function WeatherView() {
       }
     }
   }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem('user');
-    setUser(null);
-    setResult(null);
-    setCity('');
-  };
 
   const isDaytime = () => {
     if (!result) return true;
@@ -151,18 +143,20 @@ function WeatherView() {
       )}
 
       {/* --- Weather Form --- */}
-      <WeatherForm
-        setCity={setCity}
-        handleSubmit={handleSubmit}
-        loading={loading}
-      />
+      <div className="weather-search">
+        <WeatherForm
+          setCity={setCity}
+          handleSubmit={handleSubmit}
+          loading={loading}
+        />
+      </div>
 
       {/* --- Error Message --- */}
       {error && <p className="error">{error}</p>}
 
       {/* --- Weather Result --- */}
       {!result ? (
-        <p className="click">Please click the button to see Data</p>
+        <p className="click"></p>
       ) : (
         <>
           <WeatherCard data={result} />
