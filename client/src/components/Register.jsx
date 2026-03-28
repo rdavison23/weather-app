@@ -40,7 +40,7 @@ export default function Register({ setUser }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="register-form" onSubmit={handleSubmit}>
       <input
         type="text"
         placeholder="Username"
