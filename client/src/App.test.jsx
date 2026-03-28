@@ -1,8 +1,21 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('App Component', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('renders navigation links', () => {
+    render(<App />);
+
+    expect(screen.getByText('Home')).toBeInTheDocument();
+    expect(screen.getByText('Register')).toBeInTheDocument();
+  });
+
+  it('does NOT show logout button when no user is stored', () => {
+    render(<App />);
+
+    expect(screen.queryByText('Logout')).not.toBeInTheDocument();
+  });
 });
